@@ -25,7 +25,19 @@
             <div class="form-item">
                 <div class="tag">进货价格：</div>
                 <div class="content">
-                    <InputNumber v-model.trim="prevPrice" :min="0" placeholder="请输入进货价格"/>
+                    <InputNumber v-model.trim="prevPrice" :min="0" @on-change="setPrevTotal" placeholder="请输入进货价格"/>
+                </div>
+            </div>
+            <div class="form-item">
+                <div class="tag">进货数量：</div>
+                <div class="content">
+                    <InputNumber v-model.trim="prevNumber" :min="0" disabled/>
+                </div>
+            </div>
+            <div class="form-item">
+                <div class="tag">进货小计：</div>
+                <div class="content">
+                    <InputNumber v-model.trim="prevTotal" disabled :min="0"/>
                 </div>
             </div>
             <div class="form-item">
@@ -66,13 +78,13 @@
                         <div class="size-li rel">
                             <div class="tag abs">尺码：</div>
                             <div class="box rel">
-                                <Input v-model.trim="s.value" placeholder="请输入尺码"/>
+                                <Input v-model.trim="s.value" @on-change="setPrevTotal" placeholder="请输入尺码"/>
                             </div>
                         </div>
                         <div class="size-li rel">
                             <div class="tag abs">件数：</div>
                             <div class="box rel">
-                                <InputNumber v-model.trim="s.count" :min="0" placeholder="请输入件数"/>
+                                <InputNumber v-model.trim="s.count" :min="0" @on-change="setPrevTotal" placeholder="请输入件数"/>
                             </div>
                         </div>
                         <div v-if="item.size.length > 1" class="size-li rel">
@@ -105,6 +117,9 @@ export default {
     computed: {
         propsLength() {
             return this.props.length;
+        },
+        prevNumber() {
+            return this.prevPrice ? (this.prevTotal / this.prevPrice) : 0;
         },
     },
     methods: {
@@ -141,6 +156,7 @@ export default {
                 content: '<p>确认删除该颜色属性？</p>',
                 onOk: () => {
                     this.props = _us.without(this.props, item);
+                    this.setPrevTotal();
                 },
             });
         },
@@ -155,13 +171,13 @@ export default {
                     count: 0,
                 }
             );
-            console.log(this.props);
         },
         /**
          * 删除一个尺码属性
          */
         deleteOneSize(size, item) {
             item.size = _us.without(item.size, size);
+            this.setPrevTotal();
         },
         /**
          * 获取提交参数
@@ -177,6 +193,20 @@ export default {
                 props: this.props,
             };
             return params;
+        },
+        /**
+         * 设置进货总计
+         */
+        setPrevTotal() {
+            let total = 0;
+            for (const v of this.props) {
+                for (const s of v.size) {
+                    if (s.count) {
+                        total += this.prevPrice * s.count;
+                    }
+                }
+            }
+            this.prevTotal = total;
         },
         /**
          * 是否存在不完整的颜色信息
