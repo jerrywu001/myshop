@@ -23,7 +23,8 @@ export default {
     created() {
     },
     mounted() {
-    }
+        window.onbeforeunload = null;
+    },
 };
 
 </script>

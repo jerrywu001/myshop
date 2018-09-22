@@ -21,7 +21,8 @@ export default {
     methods: {
     },
     mounted() {
-    }
+        window.onbeforeunload = null;
+    },
 };
 
 </script>

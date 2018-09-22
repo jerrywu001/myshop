@@ -29,6 +29,7 @@ export default {
 }
 
 .sys-content {
+    background-color: #fafafa;
     margin-left: 240px;
     margin-top: 61px;
     height: calc(100% - 9px);
