@@ -5,7 +5,10 @@
                 <Icon type="ios-home-outline"></Icon> 首页
             </BreadcrumbItem>
             <BreadcrumbItem>
-                <Icon type="logo-buffer"></Icon> 销售查询
+                <Icon type="logo-buffer"></Icon> 商品查询
+            </BreadcrumbItem>
+            <BreadcrumbItem>
+                <Icon type="logo-buffer"></Icon> 详情
             </BreadcrumbItem>
         </Breadcrumb>
 	</div>
@@ -13,7 +16,7 @@
 
 <script>
 export default {
-    name: 'sale',
+    name: 'detail',
     data() {
         return {
         };

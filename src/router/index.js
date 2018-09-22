@@ -2,8 +2,8 @@ import Vue from 'vue';
 import Router from 'vue-router';
 import sysHeader from '@/components/SysHeader';
 import Home from '@/components/Home';
-import Sale from '@/components/Sale';
-import Store from '@/components/Store';
+import Detail from '@/components/Detail';
+import Goods from '@/components/Goods';
 import Admin from '@/components/Admin';
 
 Vue.use(Router);
@@ -23,14 +23,14 @@ export default new Router({
             },
             children: [
                 {
-                    path: 'store',
-                    name: 'store',
-                    component: Store,
+                    path: 'goods',
+                    name: 'goods',
+                    component: Goods,
 				},
                 {
-                    path: 'sale',
-                    name: 'sale',
-                    component: Sale,
+                    path: 'detail',
+                    name: 'detail',
+                    component: Detail,
 				},
                 {
                     path: 'admin',

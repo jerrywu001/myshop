@@ -5,7 +5,7 @@
                 <Icon type="ios-home-outline"></Icon> 首页
             </BreadcrumbItem>
             <BreadcrumbItem>
-                <Icon type="logo-buffer"></Icon> 库存查询
+                <Icon type="logo-buffer"></Icon> 商品查询
             </BreadcrumbItem>
         </Breadcrumb>
 	</div>
