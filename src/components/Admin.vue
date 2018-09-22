@@ -225,7 +225,7 @@ export default {
                 });
                 return;
             }
-            if (this.hasInValidColor()) {
+            if (!this.props.length || this.hasInValidColor()) {
                 this.$Notice.warning({
                     title: '颜色信息不完整',
                 });
@@ -239,14 +239,17 @@ export default {
             }
             const params = this.getParams();
             this.$ajax.save(params).then((rsp) => {
-                console.log(rsp);
+                if (rsp.data.success) {
+                    this.clear();
+                    this.$Notice.success({
+                        title: '保存成功',
+                    });
+                } else {
+                    this.$Notice.error({
+                        title: rsp.data.msg,
+                    });
+            }
             });
-            // 保存成功
-            this.clear();
-            this.$Notice.success({
-                title: '保存成功',
-            });
-            console.log(params);
         },
         clear() {
             this.name = '';
