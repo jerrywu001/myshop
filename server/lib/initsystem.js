@@ -3,6 +3,7 @@ var Good = require('../lib/db').Good;
 //user
 var good = new Good({
     goodId: "",
+    shop: "",
     name: "",
     prevPrice: 0,
     price: 0,

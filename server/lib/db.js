@@ -9,7 +9,7 @@ db.once('open', () => {
 exports.Good = db.model('good', new mongoose.Schema({
     goodId: String,
     name: String,
-    email: String,
+    shop: String,
     prevPrice: {
         type: Number,
         default: 0

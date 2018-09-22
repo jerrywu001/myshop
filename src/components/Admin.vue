@@ -11,6 +11,14 @@
         <div class="form">
             <Divider orientation="left">基本信息</Divider>
             <div class="form-item">
+                <div class="tag">商家选择：</div>
+                <div class="content">
+                    <Select v-model="shop" style="width:200px">
+                        <Option v-for="i in shops" :value="i.value" :key="i.value">{{ i.label }}</Option>
+                    </Select>
+                </div>
+            </div>
+            <div class="form-item">
                 <div class="tag">商品名称：</div>
                 <div class="content">
                     <Input v-model.trim="name" placeholder="请输入商品名称"/>
@@ -111,6 +119,25 @@ export default {
             prevTotal: 0,
             price: 0,
             salePrice: 0,
+            shop: '',
+            shops: [
+                {
+                    value: '小资童品',
+                    label: '小资童品',
+                },
+                {
+                    value: 'baby小世界',
+                    label: 'baby小世界',
+                },
+                {
+                    value: '子田',
+                    label: '子田',
+                },
+                {
+                    value: '糖卡布衣',
+                    label: '糖卡布衣',
+                },
+            ],
             props: [],
         };
     },
@@ -191,6 +218,7 @@ export default {
                 price: this.price,
                 salePrice: this.salePrice,
                 props: this.props,
+                shop: this.shop,
             };
             return params;
         },
@@ -243,6 +271,12 @@ export default {
          * 提交
          */
         save() {
+            if (!this.shop) {
+                this.$Notice.warning({
+                    title: '请选择一个商家',
+                });
+                return;
+            }
             if (!this.name && !this.goodId) {
                 this.$Notice.warning({
                     title: '商品名称和商品货号至少填写一个',
@@ -282,6 +316,7 @@ export default {
             });
         },
         clear() {
+            this.shop = '';
             this.name = '';
             this.goodId = '';
             this.prevPrice = 0;
