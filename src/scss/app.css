@@ -1,0 +1,56 @@
+body {
+    font-family: "open sans", "Helvetica Neue", "Helvetica", "Arial", "sans-serif", "Microsoft YaHei";
+    background-color: #fff;
+    color: #333;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+body,
+html,
+#app {
+    height: 100%;
+    overflow: hidden;
+}
+
+#app {
+    top: 0;
+    left: 0;
+    position: absolute;
+    width: 100%;
+}
+
+* {
+    outline: none;
+}
+
+.fl {
+    float: left;
+}
+
+input[disabled] {
+    cursor: not-allowed;
+}
+
+.ht7 {
+    font-size: 16px;
+}
+
+.title-tip {
+    position: relative;
+    top: 4px;
+    margin-right: 5px;
+    color: #ff5252;
+}
+
+.fixed {
+    position: fixed;
+}
+
+.abs {
+    position: absolute;
+}
+
+.rel {
+    position: relative;
+}
