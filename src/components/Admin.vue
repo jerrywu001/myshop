@@ -65,6 +65,12 @@
                     <InputNumber v-model.trim="salePrice" :min="0" disabled placeholder="请输入折后价格"/>
                 </div>
             </div>
+            <div v-show="queryId" class="form-item">
+                <div class="tag">实际售价：</div>
+                <div class="content">
+                    <Input v-model.trim="realPrice" :min="0" placeholder="请输入实际售价"/>
+                </div>
+            </div>
             <Divider orientation="left">颜色信息</Divider>
             <Button type="dashed" :disabled="propsLength > 4" @click="addOneColor">添加颜色</Button>
             <div class="color-warp rel" :class="{'large': queryId}">
@@ -130,6 +136,7 @@ export default {
             prevTotal: 0,
             price: 0,
             salePrice: 0,
+            realPrice: 0,
             shop: '',
             shops: [],
             props: [],
@@ -238,6 +245,7 @@ export default {
                 prevTotal: this.prevTotal,
                 price: this.price,
                 salePrice: this.salePrice,
+                realPrice: this.realPrice,
                 props: this.props,
                 shop: this.shop,
                 count,
@@ -379,6 +387,7 @@ export default {
                         this.prevPrice = data.prevPrice;
                         this.price = data.price;
                         this.salePrice = data.salePrice;
+                        this.realPrice = data.realPrice;
                         this.props = data.props;
                         this.setPrevTotal();
                     } else {
@@ -398,6 +407,7 @@ export default {
             this.prevPrice = 0;
             this.price = 0;
             this.salePrice = 0;
+            this.realPrice = 0;
             this.prevTotal = 0;
             this.props = [];
         },

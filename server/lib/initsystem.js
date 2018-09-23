@@ -11,6 +11,7 @@ var good = new Good({
     price: 0,
     prevTotal: 0,
     salePrice: 0,
+    realPrice: 0,
     props: []
 });
 

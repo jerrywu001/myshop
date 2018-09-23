@@ -30,6 +30,10 @@ exports.Good = db.model('good', new mongoose.Schema({
         type: Number,
         default: 0
     },
+    realPrice: {
+        type: Number,
+        default: 0
+    },
     props: {
         type: Array,
         default: []
