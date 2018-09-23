@@ -6,11 +6,21 @@ router.put('/save', function (req, res, next) {
     var data = req.body;
     var goodId = data.goodId || new Date().getTime().toString();
     var name = data.name;
+    var shop = data.shop;
 
     Good.find({
-        "$or": [
-            { goodId } ,
-            { name },
+        "$and": [
+            {
+                "$or": [
+                    { goodId },
+                    { name }
+                ]
+            },
+            {
+                "$or": [
+                    { shop }
+                ]
+            }
         ]
     }, (err, docs) => {
         if (docs && docs.length) {
