@@ -9,7 +9,7 @@
             </BreadcrumbItem>
         </Breadcrumb>
         <div class="input rel">
-            <Input v-model.trim="shopName" placeholder="请输入商家名称" style="width: 500px; margin-right: 20px;"/>
+            <Input v-model.trim="shopName" placeholder="请输入商家名称" @on-enter="add" style="width: 500px; margin-right: 20px;"/>
             <Button type="primary" :disabled="!shopName" @click="add">添加</Button>
         </div>
         <Divider orientation="left">商家列表</Divider>
@@ -71,12 +71,12 @@ export default {
         line-height: 30px;
         margin: 8px 0;
         padding: 0 8px;
-    }
-    .ivu-icon {
-        color: #f7b731;
-        font-weight: bold;
-        font-size: 18px;
-        margin-right: 8px;
+        .ivu-icon {
+            color: #f7b731;
+            font-weight: bold;
+            font-size: 18px;
+            margin-right: 8px;
+        }
     }
 }
 </style>
