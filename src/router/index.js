@@ -5,7 +5,7 @@ import Home from '@/components/Home';
 import Detail from '@/components/Detail';
 import Goods from '@/components/Goods';
 import Admin from '@/components/Admin';
-import Brands from '@/components/Brands';
+import Shops from '@/components/Shops';
 
 Vue.use(Router);
 
@@ -39,9 +39,9 @@ export default new Router({
                     component: Admin,
                 },
                 {
-                    path: 'brands',
-                    name: 'brands',
-                    component: Brands,
+                    path: 'shops',
+                    name: 'shops',
+                    component: Shops,
                 },
 		    ]
     	},

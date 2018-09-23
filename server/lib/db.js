@@ -32,5 +32,10 @@ exports.Good = db.model('good', new mongoose.Schema({
     }
 }));
 
+exports.Shop = db.model('shop', new mongoose.Schema({
+    value: String,
+    label: String,
+}));
+
 
 module.exports = exports;

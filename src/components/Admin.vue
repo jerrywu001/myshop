@@ -14,7 +14,7 @@
                 <div class="tag">商家选择：</div>
                 <div class="content">
                     <Select v-model="shop" style="width:200px">
-                        <Option v-for="i in shops" :value="i.value" :key="i.value">{{ i.label }}</Option>
+                        <Option v-for="i in shops" :value="i.value" :key="i._id">{{ i.label }}</Option>
                     </Select>
                 </div>
             </div>
@@ -120,24 +120,7 @@ export default {
             price: 0,
             salePrice: 0,
             shop: '',
-            shops: [
-                {
-                    value: '小资童品',
-                    label: '小资童品',
-                },
-                {
-                    value: 'baby小世界',
-                    label: 'baby小世界',
-                },
-                {
-                    value: '子田',
-                    label: '子田',
-                },
-                {
-                    value: '糖卡布衣',
-                    label: '糖卡布衣',
-                },
-            ],
+            shops: [],
             props: [],
         };
     },
@@ -324,6 +307,11 @@ export default {
             this.salePrice = 0;
             this.props = [];
         },
+    },
+    created() {
+        this.$ajax.getShops().then((rsp) => {
+            this.shops = rsp.data.shops || [];
+        });
     },
     mounted() {
         window.onbeforeunload = function () {

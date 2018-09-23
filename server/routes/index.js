@@ -4,4 +4,5 @@ var router = express.Router();
 
 module.exports = function (app) {
     app.use(api, require('./good'));
+    app.use(api, require('./shop'));
 };

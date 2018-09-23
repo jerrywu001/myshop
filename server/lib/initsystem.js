@@ -1,4 +1,5 @@
 var Good = require('../lib/db').Good;
+var Shop = require('../lib/db').Shop;
 
 //user
 var good = new Good({
@@ -13,5 +14,14 @@ var good = new Good({
 });
 
 good.save((err, row) => {
+    console.log(err);
+});
+
+var shop = new Shop({
+    value: "",
+    label: "",
+});
+
+shop.save((err, row) => {
     console.log(err);
 });

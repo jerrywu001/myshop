@@ -7,7 +7,7 @@
                     菜单导航
                 </template>
                 <MenuItem name="admin" to="/admin">入库管理</MenuItem>
-                <MenuItem name="brands" to="/brands">商家管理</MenuItem>
+                <MenuItem name="shops" to="/shops">商家管理</MenuItem>
                 <MenuItem name="goods" to="/goods">商品查询</MenuItem>
             </Submenu>
         </Menu>
