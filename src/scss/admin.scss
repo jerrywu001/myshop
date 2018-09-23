@@ -6,6 +6,28 @@
     .ivu-divider {
         margin: 30px 8px;
     }
+    .ivu-input[disabled],
+    .ivu-input-number-input[disabled] {
+        color: #ff0846;
+    }
+    .ivu-select-disabled {
+        .ivu-select-selection {
+            color: #ff0846;
+        }
+    }
+    .hidden {
+        .ivu-input-number-input {
+            background-color: #ff0846!important;
+        }
+    }
+    &.edit {
+        .nav-guide {
+            display: none;
+        }
+        &.sys-content {
+            margin-left: 0;
+        }
+    }
 }
 
 .form {
@@ -39,7 +61,13 @@
 
 .color-warp {
     margin: 20px 90px 20px 90px;
-    width: 680px;
+    width: 636px;
+    &.large {
+        width: 802px;
+        .add-size {
+            left: 695px!important;
+        }
+    }
     .tag {
         width: 83px;
         height: 30px;

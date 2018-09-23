@@ -1,11 +1,11 @@
 <template>
-	<div class="admin">
+	<div class="admin" :class="{'edit': queryId}">
         <Breadcrumb>
             <BreadcrumbItem>
                 <Icon type="ios-home-outline"></Icon> 首页
             </BreadcrumbItem>
             <BreadcrumbItem>
-                <Icon type="logo-buffer"></Icon> 入库管理
+                <Icon type="logo-buffer"></Icon> {{ queryId ? '商品管理' : '入库管理' }}
             </BreadcrumbItem>
         </Breadcrumb>
         <div class="form">
@@ -13,7 +13,7 @@
             <div class="form-item">
                 <div class="tag">商家选择：</div>
                 <div class="content">
-                    <Select v-model="shop" style="width:200px">
+                    <Select v-model="shop" :disabled="disabledEdit" style="width:200px">
                         <Option v-for="i in shops" :value="i.value" :key="i._id">{{ i.label }}</Option>
                     </Select>
                 </div>
@@ -21,19 +21,24 @@
             <div class="form-item">
                 <div class="tag">商品名称：</div>
                 <div class="content">
-                    <Input v-model.trim="name" placeholder="请输入商品名称"/>
+                    <Input v-model.trim="name" :disabled="disabledEdit" placeholder="请输入商品名称"/>
                 </div>
             </div>
             <div class="form-item">
                 <div class="tag">商品货号：</div>
                 <div class="content">
-                    <Input v-model.trim="goodId" placeholder="请输入商品货号"/>
+                    <Input v-model.trim="goodId" :disabled="disabledEdit" placeholder="请输入商品货号"/>
                 </div>
             </div>
             <div class="form-item">
                 <div class="tag">进货价格：</div>
-                <div class="content">
-                    <InputNumber v-model.trim="prevPrice" :min="0" @on-change="setPrevTotal" placeholder="请输入进货价格"/>
+                <div class="content" :class="{'hidden': !isShowPrice}" @dblclick="togglePrice">
+                    <InputNumber
+                        v-model.trim="prevPrice"
+                        placeholder="请输入进货价格"
+                        :min="0"
+                        :disabled="disabledEdit"
+                        @on-change="setPrevTotal"/>
                 </div>
             </div>
             <div class="form-item">
@@ -51,7 +56,7 @@
             <div class="form-item">
                 <div class="tag">吊牌价格：</div>
                 <div class="content">
-                    <InputNumber v-model.trim="price" :min="0" @on-change="setSalePrice" placeholder="请输入吊牌价格"/>
+                    <InputNumber v-model.trim="price" :min="0" :disabled="disabledEdit" @on-change="setSalePrice" placeholder="请输入吊牌价格"/>
                 </div>
             </div>
             <div class="form-item">
@@ -62,7 +67,7 @@
             </div>
             <Divider orientation="left">颜色信息</Divider>
             <Button type="dashed" :disabled="propsLength > 4" @click="addOneColor">添加颜色</Button>
-            <div class="color-warp rel">
+            <div class="color-warp rel" :class="{'large': queryId}">
                 <div class="color-item rel" v-for="item in props" :key="item.id">
                     <!-- 添加尺码 -->
                     <a class="add-size" title="添加尺码" @click="addOneSize(item)"><Icon type="ios-add-circle" /></a>
@@ -95,6 +100,12 @@
                                 <InputNumber v-model.trim="s.count" :min="0" @on-change="setPrevTotal" placeholder="请输入件数"/>
                             </div>
                         </div>
+                        <div v-show="queryId !== ''" class="size-li rel">
+                            <div class="tag abs">已售：</div>
+                            <div class="box rel">
+                                <InputNumber v-model.trim="s.saled" :min="0" :max="s.count" @on-change="setPrevTotal" placeholder="请输入已售件数"/>
+                            </div>
+                        </div>
                         <div v-if="item.size.length > 1" class="size-li rel">
                             <div class="box rel">
                                 <a class="delete" @click="deleteOneSize(s, item);">删除</a>
@@ -104,7 +115,7 @@
                 </div>
             </div>
         </div>
-        <Button type="primary" size="large" style="width: 100px;left: 669px;" @click="save">提交</Button>
+        <Button type="primary" size="large" style="width: 100px;left: 669px;" @click="save">保存</Button>
 	</div>
 </template>
 
@@ -122,9 +133,20 @@ export default {
             shop: '',
             shops: [],
             props: [],
+            isShowPrice: false,
         };
     },
     computed: {
+        queryId() {
+            return this.$route.params.id || '';
+        },
+        disabledEdit() {
+            if (!this.queryId) {
+                this.clear();
+                this.isShowPrice = true;
+            }
+            return !!this.queryId;
+        },
         propsLength() {
             return this.props.length;
         },
@@ -132,9 +154,22 @@ export default {
             return this.prevPrice ? (this.prevTotal / this.prevPrice) : 0;
         },
     },
+    watch: {
+        queryId: {
+            immediate: true,
+            handler() {
+                this.getGoodInfo();
+            },
+        },
+    },
     methods: {
         getId() {
             return new Date().getTime().toString();
+        },
+        togglePrice() {
+            if (this.queryId) {
+                this.isShowPrice = !this.isShowPrice;
+            }
         },
         /**
          * 设置折后价格
@@ -153,6 +188,7 @@ export default {
                     {
                         value: '',
                         count: 0,
+                        saled: 0,
                     },
                 ],
             });
@@ -179,6 +215,7 @@ export default {
                     id: this.getId(),
                     value: '',
                     count: 0,
+                    saled: 0,
                 }
             );
         },
@@ -193,6 +230,7 @@ export default {
          * 获取提交参数
          */
         getParams() {
+            const count = this.getGoodCount();
             const params = {
                 name: this.name,
                 goodId: this.goodId,
@@ -202,8 +240,22 @@ export default {
                 salePrice: this.salePrice,
                 props: this.props,
                 shop: this.shop,
+                count,
             };
             return params;
+        },
+        /**
+         * 设置商品库存
+         */
+        getGoodCount() {
+            let count = 0;
+            for (const v of this.props) {
+                for (const s of v.size) {
+                    const num = s.count - (s.saled|| 0);
+                    count += num < 0 ? 0 : num;
+                }
+            }
+            return count;
         },
         /**
          * 设置进货总计
@@ -285,19 +337,60 @@ export default {
                 return;
             }
             const params = this.getParams();
-            this.$ajax.save(params).then((rsp) => {
-                if (rsp.data.success) {
-                    this.clear();
-                    this.$Notice.success({
-                        title: '保存成功',
-                    });
-                } else {
-                    this.$Notice.error({
-                        title: rsp.data.msg,
-                    });
+            if (this.queryId) { // 保存
+                params._id = this.queryId;
+                this.$ajax.updateGood(params).then((rsp) => {
+                    if (rsp.data.success) {
+                        this.$Notice.success({
+                            title: '保存成功',
+                        });
+                    } else {
+                        this.$Notice.error({
+                            title: rsp.data.msg,
+                        });
+                    }
+                });
+            } else { // 添加
+                this.$ajax.save(params).then((rsp) => {
+                    if (rsp.data.success) {
+                        this.clear();
+                        this.$Notice.success({
+                            title: '保存成功',
+                        });
+                    } else {
+                        this.$Notice.error({
+                            title: rsp.data.msg,
+                        });
+                    }
+                });
             }
-            });
         },
+        /**
+         * 获取商品详情
+         */
+        getGoodInfo() {
+            if (this.queryId) {
+                this.$ajax.getGood(this.queryId).then((rsp) => {
+                    const data = rsp.data.good || {};
+                    if (rsp.data.success) {
+                        this.shop = data.shop;
+                        this.name = data.name;
+                        this.goodId = data.goodId;
+                        this.prevPrice = data.prevPrice;
+                        this.price = data.price;
+                        this.salePrice = data.salePrice;
+                        this.props = data.props;
+                        this.setPrevTotal();
+                    } else {
+                        this.$Message.error(rsp.data.msg);
+                    }
+                });
+            }
+            this.isShowPrice = !this.queryId;
+        },
+        /**
+         * 清空表单
+         */
         clear() {
             this.shop = '';
             this.name = '';
@@ -305,6 +398,7 @@ export default {
             this.prevPrice = 0;
             this.price = 0;
             this.salePrice = 0;
+            this.prevTotal = 0;
             this.props = [];
         },
     },
@@ -317,6 +411,10 @@ export default {
         window.onbeforeunload = function () {
             return '关闭提示';
         };
+        if (this.queryId) {
+            window.onbeforeunload = null;
+            document.getElementsByClassName('nav-guide')[0].remove();
+        }
     },
 };
 

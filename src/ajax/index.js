@@ -11,9 +11,18 @@ const ajax = {
     searchGoods(options) {
         return axios.post('/api/v1/goods', options);
     },
+    getGood(id) {
+        return axios.get(`/api/v1/good/${id}`);
+    },
+    updateGood(options) {
+        return axios.put('/api/v1/good/update', options);
+    },
+    deleteGood(id) {
+        return axios.delete(`/api/v1/good/${id}`);
+    },
     uptoken() {
         return axios.get('/api/v1/uptoken');
-    }
+    },
 };
 
 export default ajax;

@@ -10,6 +10,10 @@ exports.Good = db.model('good', new mongoose.Schema({
     goodId: String,
     name: String,
     shop: String,
+    count: {
+        type: Number,
+        default: 0
+    },
     prevPrice: {
         type: Number,
         default: 0

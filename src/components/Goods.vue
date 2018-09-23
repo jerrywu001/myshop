@@ -13,21 +13,22 @@
         </Select>
         <div class="input rel">
             <Input v-model.trim="keyword" placeholder="请输入商品名称" @on-enter="search" style="width: 500px; margin-right: 20px;"/>
-            <Button type="primary" :disabled="!keyword" @click="search">查询</Button>
+            <Button type="primary" @click="search">查询</Button>
         </div>
         <Divider orientation="left">商品查询结果
             <label class="total" v-if="goodsLen">共{{ goodsLen }}条</label>
         </Divider>
         <div class="goods-warp rel">
             <div class="good-box rel" v-for="item in goods" :key="item._id">
-                <a class="link" @click="view(item._id);">查看详细</a>
+                <a class="link rel" style="top: 22px;" @click="deleteOne(item._id);">删除</a>
+                <div class="empty abs" v-if="item.count < 1"></div>
                 <div class="good-item g-number rel">
                     <div class="tag abs">商品货号：</div>
-                    <div class="content rel">{{ item.goodId || '' }}</div>
+                    <div class="content title-link rel" @click="view(item._id);">{{ item.goodId || '' }}</div>
                 </div>
                 <div class="good-item rel">
                     <div class="tag abs">商品名称：</div>
-                    <div class="content rel">{{ item.name || '' }}</div>
+                    <div class="content title-link rel" @click="view(item._id);">{{ item.name || '' }}</div>
                 </div>
                 <div class="good-item g-number rel">
                     <div class="tag abs">吊牌价格：</div>
@@ -40,6 +41,10 @@
                 <div class="good-item rel">
                     <div class="tag abs">进货渠道：</div>
                     <div class="content rel">{{ item.shop || '' }}</div>
+                </div>
+                <div class="good-item rel">
+                    <div class="tag abs">商品库存：</div>
+                    <div class="content rel">{{ item.count || 0 }}</div>
                 </div>
             </div>
         </div>
@@ -77,6 +82,20 @@ export default {
         view(id) {
             window.open(`/good/${id}`);
         },
+        deleteOne(id) {
+            this.$Modal.confirm({
+                title: '提示',
+                content: '<p>确认删除该商品？</p>',
+                onOk: () => {
+                    this.$ajax.deleteGood(id).then((rsp) => {
+                        this.$Message.success(rsp.data.msg);
+                        if (rsp.data.success) {
+                            this.search();
+                        }
+                    });
+                },
+            });
+        },
     },
     created() {
         this.$ajax.getShops().then((rsp) => {
@@ -86,6 +105,7 @@ export default {
                 value: '全部',
             });
         });
+        this.search();
     },
     mounted() {
         window.onbeforeunload = null;
@@ -137,5 +157,24 @@ export default {
         border-bottom: 1px #ddd dashed;
         padding: 16px 0 12px 0;
     }
+}
+
+.title-link {
+    color: #2d8cf0;
+    cursor: pointer;
+    &:hover {
+        color: #f60;
+        text-decoration: underline;
+    }
+}
+
+.empty {
+    background-image: url(/src/assets/imgs/empty.png);
+    background-repeat: no-repeat;
+    background-size: 100% auto;
+    width: 115px;
+    height: 60px;
+    right: 27px;
+    top: 10px;
 }
 </style>

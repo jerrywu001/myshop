@@ -6,6 +6,7 @@ var good = new Good({
     goodId: "",
     shop: "",
     name: "",
+    count: 0,
     prevPrice: 0,
     price: 0,
     prevTotal: 0,
