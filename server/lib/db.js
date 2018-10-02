@@ -31,8 +31,12 @@ exports.Good = db.model('good', new mongoose.Schema({
         default: 0
     },
     realPrice: {
-        type: Number,
-        default: 0
+        type: String,
+        default: '0'
+    },
+    remark: {
+        type: String,
+        default: ''
     },
     props: {
         type: Array,

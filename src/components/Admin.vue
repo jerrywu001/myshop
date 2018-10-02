@@ -71,6 +71,12 @@
                     <Input v-model.trim="realPrice" :min="0" placeholder="请输入实际售价"/>
                 </div>
             </div>
+            <div class="form-item">
+                <div class="tag">商品备注：</div>
+                <div class="content">
+                    <Input v-model.trim="remark" :min="0" placeholder="备注"/>
+                </div>
+            </div>
             <Divider orientation="left">颜色信息</Divider>
             <Button type="dashed" :disabled="propsLength > 4" @click="addOneColor">添加颜色</Button>
             <div class="color-warp rel" :class="{'large': queryId}">
@@ -137,6 +143,7 @@ export default {
             price: 0,
             salePrice: 0,
             realPrice: 0,
+            remark: '',
             shop: '',
             shops: [],
             props: [],
@@ -246,6 +253,7 @@ export default {
                 price: this.price,
                 salePrice: this.salePrice,
                 realPrice: this.realPrice,
+                remark: this.remark,
                 props: this.props,
                 shop: this.shop,
                 count,
@@ -389,6 +397,7 @@ export default {
                         this.salePrice = data.salePrice;
                         this.realPrice = data.realPrice;
                         this.props = data.props;
+                        this.remark = data.remark || '';
                         this.setPrevTotal();
                     } else {
                         this.$Message.error(rsp.data.msg);
@@ -409,6 +418,7 @@ export default {
             this.salePrice = 0;
             this.realPrice = 0;
             this.prevTotal = 0;
+            this.remark = '';
             this.props = [];
         },
     },
