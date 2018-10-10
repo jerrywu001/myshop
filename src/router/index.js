@@ -5,6 +5,7 @@ import Home from '@/components/Home';
 import Goods from '@/components/Goods';
 import Admin from '@/components/Admin';
 import Shops from '@/components/Shops';
+import Sales from '@/components/Sales';
 
 Vue.use(Router);
 
@@ -41,6 +42,11 @@ export default new Router({
                     path: 'shops',
                     name: 'shops',
                     component: Shops,
+                },
+                {
+                    path: 'sales',
+                    name: 'sales',
+                    component: Sales,
                 },
 		    ]
     	},
