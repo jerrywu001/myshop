@@ -78,7 +78,7 @@
                 </div>
             </div>
             <Divider orientation="left">颜色信息</Divider>
-            <Button type="dashed" :disabled="propsLength > 4" @click="addOneColor">添加颜色</Button>
+            <Button type="dashed" :disabled="propsLength > 15" @click="addOneColor">添加颜色</Button>
             <div class="color-warp rel" :class="{'large': queryId}">
                 <div class="color-item rel" v-for="item in props" :key="item.id">
                     <!-- 添加尺码 -->
