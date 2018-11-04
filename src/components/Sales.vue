@@ -16,12 +16,16 @@
             <Button type="primary" @click="search">查询</Button>
         </div>
         <Divider orientation="left">销售查询结果</Divider>
-        <div class="goods-warp rel">
+        <div class="goods-warp rel" style="height: auto;">
             <p style="font-size: 14px;">总进货额：{{ totalPrev }} 元</p>
             <p style="font-size: 14px;">总销售额：{{ total }} 元</p>
             <p style="font-size: 14px;">总盈利额：{{ totalGet }} 元</p>
             <p style="font-size: 14px;">每日盈利：{{ oneDayGet }} 元</p>
         </div>
+        <Divider />
+        <p v-for="(value, key) in months" :key="key">
+            <label :class="{'bold': nowMonth === key}">{{ key }}</label>：{{ value }}
+        </p>
 	</div>
 </template>
 
@@ -33,6 +37,7 @@ export default {
             shop: '全部',
             keyword: '',
             shops: [],
+            months: {},
             totalPrev: 0,
             total: 0,
             totalGet: 0,
@@ -43,6 +48,9 @@ export default {
         goodsLen() {
             return this.goods.length;
         },
+        nowMonth() {
+            return new Date().getFullYear() + '-' + (new Date().getMonth() + 1);
+        },
     },
     methods: {
         search() {
@@ -52,6 +60,7 @@ export default {
             }).then((rsp) => {
                 const goods = rsp.data.goods || [];
                 this.getToTal(goods);
+                this.setAllMonths();
             });
         },
         /**
@@ -86,6 +95,21 @@ export default {
             }
             const days = (new Date(new Date().toLocaleDateString()).getTime() - new Date("2018/09/24").getTime()) / (24 * 60 * 60 * 1000) + 1;
             this.oneDayGet = parseFloat(this.totalGet / days).toFixed(2);
+        },
+        setAllMonths() {
+            this.$ajax.getAllMonths().then((rsp) => {
+                let total = 0;
+                const months = rsp.data.months || {};
+                for (const m in months) {
+                    if (this.nowMonth !== m) {
+                        total += parseFloat(months[m]);
+                    }
+                }
+                months[this.nowMonth] = this.total - parseInt(total, 10);
+                this.$ajax.saveWithMonth(months).then((rsp) => {
+                    this.months = months;
+                });
+            });
         },
     },
     created() {
@@ -167,5 +191,10 @@ export default {
     height: 60px;
     right: 27px;
     top: 10px;
+}
+
+label.bold {
+    font-weight: bold;
+    color: #f00;
 }
 </style>

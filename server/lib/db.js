@@ -49,5 +49,13 @@ exports.Shop = db.model('shop', new mongoose.Schema({
     label: String,
 }));
 
+exports.Month = db.model('month', new mongoose.Schema({
+    mid: String,
+    value: {
+        type: Object,
+        default: {}
+    },
+}));
+
 
 module.exports = exports;
