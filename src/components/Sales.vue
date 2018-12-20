@@ -1,5 +1,5 @@
 <template>
-	<div class="goods">
+    <div class="goods">
         <Breadcrumb>
             <BreadcrumbItem>
                 <Icon type="ios-home-outline"></Icon> 首页
@@ -26,7 +26,7 @@
         <p v-for="(value, key) in months" :key="key">
             <label :class="{'bold': nowMonth === key}">{{ key }}</label>：{{ value }}
         </p>
-	</div>
+    </div>
 </template>
 
 <script>
@@ -49,7 +49,7 @@ export default {
             return this.goods.length;
         },
         nowMonth() {
-            return new Date().getFullYear() + '-' + (new Date().getMonth() + 1);
+            return `${new Date().getFullYear()}-${(new Date().getMonth() + 1)}`;
         },
     },
     methods: {
@@ -93,7 +93,7 @@ export default {
                     }
                 }
             }
-            const days = (new Date(new Date().toLocaleDateString()).getTime() - new Date("2018/09/24").getTime()) / (24 * 60 * 60 * 1000) + 1;
+            const days = (new Date(new Date().toLocaleDateString()).getTime() - new Date('2018/09/24').getTime()) / (24 * 60 * 60 * 1000) + 1;
             this.oneDayGet = parseFloat(this.totalGet / days).toFixed(2);
         },
         setAllMonths() {
@@ -106,7 +106,7 @@ export default {
                     }
                 }
                 months[this.nowMonth] = this.total - parseInt(total, 10);
-                this.$ajax.saveWithMonth(months).then((rsp) => {
+                this.$ajax.saveWithMonth(months).then((rp) => {
                     this.months = months;
                 });
             });

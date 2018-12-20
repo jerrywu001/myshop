@@ -1,8 +1,8 @@
 <template>
-	<div class="home">
+    <div class="home">
         <nav-bar></nav-bar>
-		<router-view class="sys-content"></router-view>
-	</div>
+        <router-view class="sys-content"></router-view>
+    </div>
 </template>
 
 <script>

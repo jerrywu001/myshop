@@ -1,12 +1,23 @@
-node_modules/
-*.DS_Store
-.idea/
-.vscode/
-dist/
-npm-debug.log
-package-lock.json
+.DS_Store
+node_modules*
+/dist
+
+# local env files
+.env.local
+.env.*.local
+
+# Log files
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Editor directories and files
+.env
 .idea
-hyjj-webapp.tar
-hyjj-webapp.tar.gz
-version/
-yarn.*
+.vscode
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw*
+yarn.lock

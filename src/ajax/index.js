@@ -24,10 +24,10 @@ const ajax = {
         return axios.get('/api/v1/uptoken');
     },
     getAllMonths() {
-        return axios.get(`/api/v1/months`);
+        return axios.get('/api/v1/months');
     },
     saveWithMonth(params) {
-        return axios.put(`/api/v1/months`, params);
+        return axios.put('/api/v1/months', params);
     },
 };
 

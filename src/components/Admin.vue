@@ -1,5 +1,5 @@
 <template>
-	<div class="admin" :class="{'edit': queryId}">
+    <div class="admin" :class="{'edit': queryId}">
         <Breadcrumb>
             <BreadcrumbItem>
                 <Icon type="ios-home-outline"></Icon> 首页
@@ -128,12 +128,12 @@
             </div>
         </div>
         <Button type="primary" size="large" style="width: 100px;left: 669px;" @click="save">保存</Button>
-	</div>
+    </div>
 </template>
 
 <script>
 export default {
-    name: 'admin',
+    name: 'Admin',
     data() {
         return {
             name: '',
@@ -155,11 +155,7 @@ export default {
             return this.$route.params.id || '';
         },
         disabledEdit() {
-            if (!this.queryId) {
-                this.clear();
-                this.isShowPrice = true;
-            }
-            return !!this.queryId;
+            return this.queryId !== '';
         },
         propsLength() {
             return this.props.length;
@@ -172,6 +168,10 @@ export default {
         queryId: {
             immediate: true,
             handler() {
+                if (!this.queryId) {
+                    this.isShowPrice = true;
+                    this.clear();
+                }
                 this.getGoodInfo();
             },
         },
@@ -224,14 +224,12 @@ export default {
          * 添加一个尺码属性
          */
         addOneSize(item) {
-            item.size.push(
-                {
-                    id: this.getId(),
-                    value: '',
-                    count: 0,
-                    saled: 0,
-                }
-            );
+            item.size.push({
+                id: this.getId(),
+                value: '',
+                count: 0,
+                saled: 0,
+            });
         },
         /**
          * 删除一个尺码属性
@@ -267,7 +265,7 @@ export default {
             let count = 0;
             for (const v of this.props) {
                 for (const s of v.size) {
-                    const num = s.count - (s.saled|| 0);
+                    const num = s.count - (s.saled || 0);
                     count += num < 0 ? 0 : num;
                 }
             }
@@ -428,7 +426,7 @@ export default {
         });
     },
     mounted() {
-        window.onbeforeunload = function () {
+        window.onbeforeunload = () => {
             return '关闭提示';
         };
         if (this.queryId) {

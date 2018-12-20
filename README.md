@@ -14,7 +14,7 @@ npm run init
 npm run server
 
 # serve with hot reload at localhost:8090
-npm run dev
+npm run serve
 
 # build for production with minification
 npm run build

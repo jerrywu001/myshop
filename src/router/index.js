@@ -1,11 +1,11 @@
 import Vue from 'vue';
 import Router from 'vue-router';
-import sysHeader from '@/components/SysHeader';
-import Home from '@/components/Home';
-import Goods from '@/components/Goods';
-import Admin from '@/components/Admin';
-import Shops from '@/components/Shops';
-import Sales from '@/components/Sales';
+import sysHeader from '@/components/SysHeader.vue';
+import Home from '@/components/Home.vue';
+import Goods from '@/components/Goods.vue';
+import Admin from '@/components/Admin.vue';
+import Shops from '@/components/Shops.vue';
+import Sales from '@/components/Sales.vue';
 
 Vue.use(Router);
 
@@ -18,22 +18,22 @@ export default new Router({
             name: 'Home',
             components: {
                 header: sysHeader,
-                default: Home
+                default: Home,
             },
             redirect: {
-                name: 'admin'
+                name: 'admin',
             },
             children: [
                 {
                     path: 'goods',
                     name: 'goods',
                     component: Goods,
-				},
+                },
                 {
                     path: 'good/:id',
                     name: 'detail',
                     component: Admin,
-				},
+                },
                 {
                     path: 'admin',
                     name: 'admin',
@@ -49,7 +49,7 @@ export default new Router({
                     name: 'sales',
                     component: Sales,
                 },
-		    ]
-    	},
-  	]
+            ],
+        },
+    ],
 });

@@ -1,5 +1,5 @@
 <template>
-	<div class="goods">
+    <div class="goods">
         <Breadcrumb>
             <BreadcrumbItem>
                 <Icon type="ios-home-outline"></Icon> 首页
@@ -48,7 +48,7 @@
                 </div>
             </div>
         </div>
-	</div>
+    </div>
 </template>
 
 <script>

@@ -1,5 +1,5 @@
 <template>
-	<div class="sale">
+    <div class="sale">
         <Breadcrumb>
             <BreadcrumbItem>
                 <Icon type="ios-home-outline"></Icon> 首页
@@ -18,7 +18,7 @@
                 <i class="ivu-icon ivu-icon-md-checkmark"></i>{{ item.label }}
             </div>
         </div>
-	</div>
+    </div>
 </template>
 
 <script>

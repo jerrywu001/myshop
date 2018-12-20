@@ -1,9 +1,9 @@
 <template>
-	<div class="header">
-		<div class="nav fixed">
-			<div class="title">兔小白童装销售系统</div>
-		</div>
-	</div>
+    <div class="header">
+        <div class="nav fixed">
+            <div class="title">兔小白童装销售系统</div>
+        </div>
+    </div>
 </template>
 
 <script>
