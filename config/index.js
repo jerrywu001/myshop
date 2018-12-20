@@ -2,6 +2,7 @@
 var path = require('path')
 
 module.exports = {
+  baseUrl: process.env.BASE_URL,
   build: {
     env: require('./prod.env'),
     index: path.resolve(__dirname, '../dist/index.html'),

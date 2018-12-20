@@ -8,6 +8,5 @@ package-lock.json
 .idea
 hyjj-webapp.tar
 hyjj-webapp.tar.gz
-.env
 version/
 yarn.*
