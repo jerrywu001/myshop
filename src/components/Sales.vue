@@ -184,7 +184,7 @@ export default {
 }
 
 .empty {
-    background-image: url(/src/assets/imgs/empty.png);
+    background-image: url(/static/imgs/empty.png);
     background-repeat: no-repeat;
     background-size: 100% auto;
     width: 115px;
