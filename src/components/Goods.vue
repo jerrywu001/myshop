@@ -14,6 +14,7 @@
         <div class="input rel">
             <Input v-model.trim="keyword" placeholder="请输入商品名称" @on-enter="search" style="width: 500px; margin-right: 20px;"/>
             <Button type="primary" @click="search">查询</Button>
+            <Checkbox v-model="isSellOut" @on-change="search" style="margin-left: 18px;">售罄</Checkbox>
         </div>
         <Divider orientation="left">商品查询结果
             <label class="total" v-if="goodsLen">共{{ goodsLen }}条</label>
@@ -60,6 +61,7 @@ export default {
             keyword: '',
             goods: [],
             shops: [],
+            isSellOut: true,
         };
     },
     computed: {
@@ -72,6 +74,7 @@ export default {
             this.$ajax.searchGoods({
                 shop: this.shop,
                 keyword: this.keyword,
+                isSellOut: this.isSellOut ? '1' : '0',
             }).then((rsp) => {
                 this.goods = rsp.data.goods || [];
                 if (!rsp.data.success) {
