@@ -9,8 +9,8 @@ router.post('/goods', (req, res, next) => {
     const isSellOut = data.isSellOut;
     const shop = data.shop;
     const reg = new RegExp(keyword, 'i');
+    const opt = (!shop || shop === '全部') ? {} : { shop };
     if (!keyword) {
-        const opt = (!shop || shop === '全部') ? {} : { shop };
         if (isSellOut === '0') {
             opt.count = {
                 $gt: 0,
